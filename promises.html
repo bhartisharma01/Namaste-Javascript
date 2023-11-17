@@ -1,0 +1,73 @@
+<script>
+  const p1 = new Promise((resolve, reject) => {
+    // setTimeout(() => {
+    //   resolve("p1 success");
+    // }, 3000);
+
+    setTimeout(() => {
+      reject("p1 failed");
+    }, 3000);
+  });
+
+  const p2 = new Promise((resolve, reject) => {
+    // setTimeout(() => {
+    //   resolve(("p2 success"));
+    // }, 1000);
+
+    setTimeout(() => {
+      reject("p2 failed");
+    }, 1000);
+  });
+
+  const p3 = new Promise((resolve, reject) => {
+    // setTimeout(() => {
+    //   resolve(("p3 success"));
+    // }, 1000);
+
+    setTimeout(() => {
+      reject("p3 failed");
+    }, 1000);
+  });
+
+
+  // waits for all promises to resolve and returns an array of their results. If any of the given promises rejects, it becomes the error of Promise.all, and all other results are ignored.
+  Promise.all([p1, p2, p3])
+    .then((res) => {
+      console.log("All api response",res);
+    })
+    .catch((err) => {
+      console.error("All error object",err);
+    });
+
+
+  //waits for all promises to settle and returns their results as an array of objects with:
+  //status: "fulfilled" or "rejected"
+  //value (if fulfilled) or reason (if rejected).
+  Promise.allSettled([p1, p2, p3])
+    .then((res) => {
+      console.log("Allsettled api response",res);
+    })
+    .catch((err) => {
+      console.error("Allsettled error object",err);
+    });
+
+
+  //waits for the first promise to settle, and its result/error becomes the outcome.
+  Promise.race([p1, p2, p3])
+    .then((res) => {
+      console.log("Race api Response", res);
+    })
+    .catch((err) => {
+      console.error("race error object", err);
+    });
+
+
+  //waits for the first promise to fulfill, and its result becomes the outcome. If all of the given promises are rejected, AggregateError becomes the error of Promise.any.
+  Promise.any([p1, p2, p3])
+    .then((res) => {
+      console.log("Any api Response", res);
+    })
+    .catch((err) => {
+      console.error("Any error object", err.errors);
+    });
+</script>

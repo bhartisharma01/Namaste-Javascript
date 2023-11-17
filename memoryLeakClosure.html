@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+  </head>
+  <body>
+    <button id="myButton">Click me</button>
+    <script>
+      function adder() {
+        var sum = 0;
+        return function (num) {
+          sum += num;
+          console.log(sum);
+          return sum;
+        };
+      }
+
+      var addToSum = adder();
+
+      document
+        .getElementById("myButton")
+        .addEventListener("click", function () {
+          for (var i = 0; i < 1000; i++) {
+            addToSum(i);
+          }
+        });
+
+     /**
+      * This will create a new closure each time and add a reference 
+      * to the closure to the event listener.
+     */
+      for (var i = 0; i < 1000; i++) {
+        document
+          .getElementById("myButton")
+          .addEventListener("click", function () {
+            addToSum(i);
+          });
+      }
+    </script>
+  </body>
+</html>
